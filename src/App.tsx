@@ -19,7 +19,7 @@ function App() {
 		<div className={s.App}>
 			<div className={s.wrapper}>
 				{cards.map((c) => {
-				return	<Card key={c.id} image={c.image} message={c.message}/>
+					return <Card key={c.id} image={c.image} message={c.message}/>
 				})}
 			</div>
 		</div>
