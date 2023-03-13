@@ -1,20 +1,41 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 import s from "./Card.module.css";
+import {CardsType} from "../../bll/cards-data";
 
 type PropsType = {
-	image: string
-	message: string
+	card: CardsType
+	toggleOpenCard: (value: CardsType | null) => void
+	isOpened?: boolean
 }
 
-const Card = ({image, message}: PropsType) => {
+const Card = ({card, toggleOpenCard, isOpened}: PropsType) => {
+
+	const {message, image} = card
+
+	const closeHandler = (e: MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		toggleOpenCard(null)
+	}
+
+	const openHandler = () => {
+		toggleOpenCard(card)
+	}
+
 	return (
-		<div className={s.card}>
-			<div className={s.label}>
+		<div onClick={openHandler} className={isOpened ? s.cardLarge : s.card}>
+			<div className={isOpened ? s.labelLarge : s.label}>
 				<span>{message}</span>
 			</div>
 			<img src={image} alt="photo"/>
-		</div>
-	);
+			{isOpened &&
+          <div className={isOpened ? s.btnWrapperLarge : s.btnWrapper}>
+              <button
+                  className={isOpened ? s.btnLarge : s.btn}
+                  onClick={closeHandler}>X
+              </button>
+          </div>
+			}
+		</div>)
 };
 
 export default Card;
